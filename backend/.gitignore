@@ -3,5 +3,4 @@ include
 bin
 __pycache__
 migrations
-__init__.py
 db.sqlite3
