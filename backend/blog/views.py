@@ -3,9 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 
-from .models import Article, Tag
+from .serializers import Article, Tag, ArticleSerializer, ArticleApercuSerializer
+
 
 @api_view(["GET"])
 def get_articles(request, offset=0, number=20):
-    offset += 1
-    return Response(list(range(offset, offset+number)), status.HTTP_200_OK)
+    articles = Article.objects.all().order_by('date')[offset:offset+number]
+    return Response(ArticleApercuSerializer(articles, many=True).data, status.HTTP_200_OK)
