@@ -18,3 +18,12 @@ def article(request, id):
     except:
         return Response("article not found", status.HTTP_404_NOT_FOUND)
     return Response(ArticleSerializer(article).data, status.HTTP_200_OK)
+
+@api_view(["GET"])
+def articles_by_tag(request, tag):
+    try:
+        tag = Tag.objects.get(name=tag)
+    except:
+        return Response("tag not found", status.HTTP_404_NOT_FOUND)
+    articles = tag.article_set.all()
+    return Response(ArticleApercuSerializer(articles, many=True).data, status.HTTP_200_OK)
