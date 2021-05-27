@@ -48,12 +48,17 @@ class Show extends React.Component {
                                     }}
                                 />
                                 <Text style={styles.title}>{item.title}</Text>
+                                <View style={styles.description}>
+                                    {item.tags.map((tag) => (
+                                        <Text style={styles.descriptionText}>#{tag}</Text>
+                                    ))}
+                                </View>
                                 <View style={styles.button}>
                                     <Button
                                         color="#9f79ee"
                                         title="Lire l'article"
                                         onPress={() =>
-                                            navigation.navigate("ShowSingle", {item: item.id})
+                                            this.props.navigation.navigate("ShowSingle", {item: item.id})
                                         }
                                     />
                                 </View>
