@@ -1,36 +1,53 @@
 import React from "react";
-import {
-    StyleSheet,
-    ScrollView,
-    Text,
-    View,
-    Image,
-    Button
-} from "react-native";
+import {StyleSheet, ScrollView, Text, View, Image, TouchableOpacity} from "react-native";
+import {getArticle} from "../lib/util";
 
-const ShowSingle = ({route, navigation}) => {
+class ShowSingle extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            post: undefined,
+            loading: true
+        }
+    }
+    componentDidMount() {
+        getArticle(1).then((res) => {
+            this.setState({post: res.data})
+        })
+    }
 
-    return (
-        <View style={styles.container}>
-            {typeof post != "undefined" ? (
-                <ScrollView style={styles.scroll}>
-                    <View style={styles.post}>
-                        <Image
-                            style={styles.image}
-                            source={{
-                                uri: post.image
-                            }}
-                        />
-                        <Text style={styles.title}>{post.title}</Text>
-                        <Text style={styles.description}>{post.description}</Text>
-                    </View>
-                </ScrollView>
-            ) : (
-                <Text></Text>
-            )}
-        </View>
-    );
-};
+    render() {
+        let {post, loading} = this.state
+        post !== undefined && post.tags.push("test_tag", "arrowverse", "the_cw", "dc_comics", "warner")
+        return (
+            <View style={styles.container}>
+                {typeof post != "undefined" ? (
+                    <ScrollView style={styles.scroll}>
+                        <View style={styles.post}>
+                            <Image
+                                style={styles.image}
+                                source={{
+                                    uri: post.image
+                                }}
+                            />
+                            <Text style={styles.title}>{post.titre}</Text>
+                            <Text style={styles.description}>{post.contenu}</Text>
+                            <View style={styles.tags}>
+                                {post.tags.map(tag => (
+                                    <TouchableOpacity key={tag} onPress={() => {}}>
+                                        <Text style={styles.tag}>#{tag}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </View>
+                    </ScrollView>
+                ) : (
+                    <Text></Text>
+                )}
+            </View>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -68,6 +85,19 @@ const styles = StyleSheet.create({
     },
     scroll: {
         width: "100%"
+    },
+    tags: {
+        textAlign: "center",
+        paddingHorizontal: 10,
+        paddingTop: 5,
+        flexDirection: "row",
+        justifyContent: "center",
+        flexWrap: "wrap",
+    },
+    tag: {
+        color: "blue",
+        textDecorationLine: "underline",
+        paddingHorizontal: 5,
     }
 });
 
