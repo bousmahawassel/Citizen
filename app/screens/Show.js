@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, Text, View, Image, Button, FlatList} from "react-native";
+import {StyleSheet, Text, View, Image, Button, FlatList, TouchableOpacity} from "react-native";
 import {getLastArticles} from "../lib/util";
 
 class Show extends React.Component {
@@ -45,9 +45,11 @@ class Show extends React.Component {
                                     }}
                                 />
                                 <Text style={styles.title}>{item.title}</Text>
-                                <View style={styles.description}>
+                                <View style={styles.tags}>
                                     {item.tags.map((tag) => (
-                                        <Text style={styles.descriptionText}>#{tag}</Text>
+                                        <TouchableOpacity key={tag} onPress={() => {}}>
+                                            <Text style={styles.tag}>#{tag}</Text>
+                                        </TouchableOpacity>
                                     ))}
                                 </View>
                                 <View style={styles.button}>
@@ -113,10 +115,18 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         alignSelf: "center"
     },
-    description: {
+    tags: {
         textAlign: "center",
         paddingHorizontal: 10,
-        paddingTop: 15
+        paddingTop: 5,
+        flexDirection: "row",
+        justifyContent: "center",
+        flexWrap: "wrap",
+    },
+    tag: {
+        color: "blue",
+        textDecorationLine: "underline",
+        paddingHorizontal: 5,
     },
     button: {
         marginTop: 15,
