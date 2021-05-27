@@ -7,9 +7,10 @@ from .serializers import Article, Tag, ArticleSerializer, ArticleApercuSerialize
 
 
 @api_view(["GET"])
-def get_articles(request, offset=0, number=20):
-    articles = Article.objects.all().order_by('date')[offset:offset+number]
-    return Response(ArticleApercuSerializer(articles, many=True).data, status.HTTP_200_OK)
+def get_articles(request, page=0):
+    articles = Article.objects.all().order_by('date')[page * 10:page * 10 + 10]
+    return Response({"articles": ArticleApercuSerializer(articles, many=True).data, "page": page}, status.HTTP_200_OK)
+
 
 @api_view(["GET"])
 def article(request, id):
@@ -19,11 +20,12 @@ def article(request, id):
         return Response("article not found", status.HTTP_404_NOT_FOUND)
     return Response(ArticleSerializer(article).data, status.HTTP_200_OK)
 
+
 @api_view(["GET"])
-def articles_by_tag(request, tag):
+def articles_by_tag(request, tag, page=0):
     try:
         tag = Tag.objects.get(name=tag)
     except:
         return Response("tag not found", status.HTTP_404_NOT_FOUND)
-    articles = tag.article_set.all()
-    return Response(ArticleApercuSerializer(articles, many=True).data, status.HTTP_200_OK)
+    articles = tag.article_set.all().order_by('date')[page*10:page*10+10]
+    return Response({"articles": ArticleApercuSerializer(articles, many=True).data, "page": page}, status.HTTP_200_OK)
