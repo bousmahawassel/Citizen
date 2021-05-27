@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet, ScrollView, Text, View, Image, TouchableOpacity} from "react-native";
+import {StyleSheet, ScrollView, Text, View, Image, TouchableOpacity, ActivityIndicator} from "react-native";
 import {getArticle} from "../lib/util";
 
 class ShowSingle extends React.Component {
@@ -20,7 +20,11 @@ class ShowSingle extends React.Component {
         let {post, loading} = this.state
         return (
             <View style={styles.container}>
-                {post !== undefined ? (
+                {loading === true ? (
+                    <View style={styles.loading_container}>
+                        <ActivityIndicator color="green" size={100}/>
+                    </View>
+                    ) : post !== undefined ? (
                     <ScrollView style={styles.scroll}>
                         <View style={styles.post}>
                             <Image
@@ -51,7 +55,6 @@ class ShowSingle extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
         alignItems: "center"
     },
     post: {
@@ -97,7 +100,17 @@ const styles = StyleSheet.create({
         color: "blue",
         textDecorationLine: "underline",
         paddingHorizontal: 5,
-    }
+    },
+    loading_container: {
+        flex:1,
+        position: 'absolute',
+        alignItems: 'center',
+        justifyContent: 'center',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0
+    },
 });
 
 export default ShowSingle;
