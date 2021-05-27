@@ -55,7 +55,7 @@ class Show extends React.Component {
                                         color="#9f79ee"
                                         title="Lire l'article"
                                         onPress={() =>
-                                            this.props.navigation.navigate("ShowSingle", {item: item.id})
+                                            this.props.navigation.navigate("ShowSingle", {id: item.id})
                                         }
                                     />
                                 </View>

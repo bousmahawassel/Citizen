@@ -11,7 +11,7 @@ class ShowSingle extends React.Component {
         }
     }
     componentDidMount() {
-        getArticle(1).then((res) => {
+        getArticle(this.props.route.params.id).then((res) => {
             this.setState({post: res.data})
         })
     }
