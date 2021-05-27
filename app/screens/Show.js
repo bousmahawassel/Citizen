@@ -1,56 +1,70 @@
 import React from "react";
 import {StyleSheet, Text, View, Image, Button, FlatList} from "react-native";
+import {getLastArticles} from "../lib/util";
 
-const Show = ({navigation}) => {
-    const posts = [{title: "Titre", description: "Test"}]
-    //const posts = []
+class Show extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            articles: []
+        }
+        this.nextPage = 0
+    }
 
-    const shortenDesc = desc => {
-        if (desc.length <= 155) return desc;
-        return desc.slice(0, 155) + "...";
-    };
+    componentDidMount() {
+        console.log("show did mount")
+        this._loadMoreArticles()
+    }
+    _loadMoreArticles = () => {
+        console.log("loading articles")
+        getLastArticles(this.nextPage).then((rep) => {
+            let data = rep.data
+            console.log(data)
+            this.nextPage = data.page + 1
+            this.setState({articles: [...this.state.articles, ...data.articles]})
+        }).catch(err => {console.log(err)})
+    }
 
-    return (
-        <View style={styles.container}>
-            {posts.length === 0 ? (
-                <View style={styles.noPosts}>
-                    <Text style={styles.noPostsText}>
-                        You have no posts for the moment!
-                    </Text>
-                </View>
-            ) : (
-                <FlatList
-                    style={{width: "100%"}}
-                    data={posts}
-                    keyExtractor={item => item.title}
-                    renderItem={({item}) => (
-                        <View style={styles.post}>
-                            <Image
-                                style={styles.image}
-                                source={{
-                                    uri: item.image
-                                }}
-                            />
-                            <Text style={styles.title}>{item.title}</Text>
-                            <Text style={styles.description}>
-                                {shortenDesc(item.description)}
-                            </Text>
-                            <View style={styles.button}>
-                                <Button
-                                    color="#9f79ee"
-                                    title="Lire l'article"
-                                    onPress={() =>
-                                        navigation.navigate("ShowSingle", {item: item.id})
-                                    }
+    render() {
+        return (
+            <View style={styles.container}>
+                {this.state.articles.length === 0 ? (
+                    <View style={styles.noPosts}>
+                        <Text style={styles.noPostsText}>
+                            You have no articles for the moment!
+                        </Text>
+                    </View>
+                ) : (
+                    <FlatList
+                        style={{width: "100%"}}
+                        data={this.state.articles}
+                        keyExtractor={item => item.id.toString()}
+                        renderItem={({item}) => (
+                            <View style={styles.post}>
+                                <Image
+                                    style={styles.image}
+                                    source={{
+                                        uri: item.image
+                                    }}
                                 />
+                                <Text style={styles.title}>{item.title}</Text>
+                                <View style={styles.button}>
+                                    <Button
+                                        color="#9f79ee"
+                                        title="Lire l'article"
+                                        onPress={() =>
+                                            navigation.navigate("ShowSingle", {item: item.id})
+                                        }
+                                    />
+                                </View>
                             </View>
-                        </View>
-                    )}
-                />
-            )}
-        </View>
-    );
-};
+                        )}
+                    />
+                )}
+            </View>
+        );
+    }
+}
 
 const styles = StyleSheet.create({
     container: {
