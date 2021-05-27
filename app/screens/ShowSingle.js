@@ -12,16 +12,15 @@ class ShowSingle extends React.Component {
     }
     componentDidMount() {
         getArticle(this.props.route.params.id).then((res) => {
-            this.setState({post: res.data})
+            this.setState({post: res.data, loading: false})
         })
     }
 
     render() {
         let {post, loading} = this.state
-        post !== undefined && post.tags.push("test_tag", "arrowverse", "the_cw", "dc_comics", "warner")
         return (
             <View style={styles.container}>
-                {typeof post != "undefined" ? (
+                {post !== undefined ? (
                     <ScrollView style={styles.scroll}>
                         <View style={styles.post}>
                             <Image
