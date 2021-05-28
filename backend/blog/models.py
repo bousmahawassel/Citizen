@@ -48,7 +48,7 @@ def dump_new_instances(sender, **kwargs):
     print(f"{sender} has been saved !")
     out = StringIO()
     management.call_command("dumpdata", stdout=out)
-    requests.put(settings.JSONBLOB_URL, json.loads(out.getvalue()))
+    requests.put(settings.JSONBLOB_URL, json=json.loads(out.getvalue()))
 
 
 post_save.connect(dump_new_instances)
