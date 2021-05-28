@@ -44,7 +44,7 @@ class Show extends React.Component {
                                         uri: item.image
                                     }}
                                 />
-                                <Text style={styles.title}>{item.title}</Text>
+                                <Text style={styles.title}>{item.titre}</Text>
                                 <View style={styles.tags}>
                                     {item.tags.map((tag) => (
                                         <TouchableOpacity key={tag} onPress={() => {}}>
