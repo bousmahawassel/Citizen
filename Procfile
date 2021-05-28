@@ -1,1 +1,1 @@
-web: cd backend && ./manage.py runserver
+web: cd backend && gunicorn backend.wsgi
