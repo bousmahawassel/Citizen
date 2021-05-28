@@ -24,7 +24,7 @@ SECRET_KEY = 'uxti24#gdbw1yoai7e_&pei=$e0=x0kt+$ss@$2^$qu!6o3*!2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False  # MUST BE MODIFIED IN PROD
 
-ALLOWED_HOSTS = ["redaction-citizen.heroku.app"]  # MUST BE MODIFIED IN PROD
+ALLOWED_HOSTS = ["redaction-citizen.herokuapp.com"]  # MUST BE MODIFIED IN PROD
 
 # Application definition
 
