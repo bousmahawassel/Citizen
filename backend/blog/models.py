@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils import timezone
+from django.core import management
+from django.db.models.signals import post_save
+from django.conf import settings
 
 
 class Tag(models.Model):
@@ -18,3 +21,12 @@ class Article(models.Model):
 
     def __str__(self):
         return self.titre
+
+
+def dump_new_instances(sender, **kwargs):
+    print(f"{sender} has been saved !")
+    with open(f"{settings.BASE_DIR}/../data.json", "w") as f:
+        management.call_command("dumpdata", stdout=f)
+
+
+post_save.connect(dump_new_instances)
