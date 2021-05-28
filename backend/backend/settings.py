@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'uxti24#gdbw1yoai7e_&pei=$e0=x0kt+$ss@$2^$qu!6o3*!2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # MUST BE MODIFIED IN PROD
+DEBUG = False  # MUST BE MODIFIED IN PROD
 
 ALLOWED_HOSTS = ["redaction-citizen.herokuapp.com"]  # MUST BE MODIFIED IN PROD
 
