@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const BACKEND_URL = "http://192.168.1.25:8000"
+export const BACKEND_URL = "https://redaction-citizen.herokuapp.com"
 
 export async function getLastArticles(page) {
     return await axios.get(`${BACKEND_URL}/blog/articles/last/${page}`)
