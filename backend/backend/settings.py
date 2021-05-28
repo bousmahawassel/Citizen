@@ -125,3 +125,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'static'),
 )
+
+JSONBLOB_ID = "911a7adc-bff0-11eb-950f-0b3d1222cca8"
+
+JSONBLOB_URL = f"https://jsonblob.com/{JSONBLOB_ID}"

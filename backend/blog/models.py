@@ -4,6 +4,7 @@ from django.core import management
 from django.db.models.signals import post_save
 from django.conf import settings
 from django.db.migrations.recorder import MigrationRecorder
+import requests
 
 
 class Tag(models.Model):
@@ -28,8 +29,7 @@ def dump_new_instances(sender, **kwargs):
     if sender is MigrationRecorder.Migration:
         return
     print(f"{sender} has been saved !")
-    with open(f"{settings.BASE_DIR}/../data.json", "w") as f:
-        management.call_command("dumpdata", stdout=f)
+    requests.put(settings.JSONBLOB_URL, management.call_command("dumpdata"))
 
 
 post_save.connect(dump_new_instances)
