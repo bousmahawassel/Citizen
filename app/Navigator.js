@@ -11,8 +11,8 @@ export default function Navigator() {
         <NavigationContainer>
             <Stack.Navigator>
                 <>
-                    <Stack.Screen name="Show" component={Show}/>
-                    <Stack.Screen name="ShowSingle" component={ShowSingle}/>
+                    <Stack.Screen name="Citizen" component={Show}/>
+                    <Stack.Screen name="Article" component={ShowSingle}/>
                 </>
             </Stack.Navigator>
         </NavigationContainer>
