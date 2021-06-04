@@ -36,6 +36,8 @@ class Show extends React.Component {
                         style={{width: "100%"}}
                         data={this.state.articles}
                         keyExtractor={item => item.id.toString()}
+                        onEndReachedThreshold={0.5}
+                        onEndReached={() => {this._loadMoreArticles()}}
                         renderItem={({item}) => (
                             <View style={styles.post}>
                                 <Image
