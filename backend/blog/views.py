@@ -25,5 +25,5 @@ def article(request, id):
 @api_view(["POST"])
 @method_decorator(csrf_exempt)
 def search(request, page=0):
-    articles = Article.objects.filter(**request.data)
+    articles = Article.objects.filter(**request.data).order_by('-date')[page*10:page*10+10]
     return Response({"articles": ArticleApercuSerializer(articles, many=True).data, "page": page}, status.HTTP_200_OK)
