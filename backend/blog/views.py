@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -21,11 +22,8 @@ def article(request, id):
     return Response(ArticleSerializer(article).data, status.HTTP_200_OK)
 
 
-@api_view(["GET"])
-def articles_by_tag(request, tag, page=0):
-    try:
-        tag = Tag.objects.get(name=tag)
-    except:
-        return Response("tag not found", status.HTTP_404_NOT_FOUND)
-    articles = tag.article_set.all().order_by('-date')[page*10:page*10+10]
+@api_view(["POST"])
+@method_decorator(csrf_exempt)
+def search(request, page=0):
+    articles = Article.objects.filter(**request.data)
     return Response({"articles": ArticleApercuSerializer(articles, many=True).data, "page": page}, status.HTTP_200_OK)

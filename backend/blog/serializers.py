@@ -13,4 +13,4 @@ class ArticleApercuSerializer(serializers.ModelSerializer):
     tags = serializers.SlugRelatedField(many=True, slug_field="name", read_only=True)
     class Meta:
         model = Article
-        fields = ['id', 'titre', 'date', 'tags', 'image']
+        fields = ['id', 'titre', 'date', 'tags', 'image', 'category']
