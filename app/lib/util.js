@@ -11,5 +11,5 @@ export async function getArticle(id) {
 }
 
 export async function search(data, page) {
-    return await axios.post(`${BACKEND_URL}/blog/search/${page}/`)
+    return await axios.post(`${BACKEND_URL}/blog/search/${page}/`, data)
 }

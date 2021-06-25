@@ -17,7 +17,6 @@ class Show extends React.Component {
     _loadMoreArticles = () => {
         getLastArticles(this.nextPage).then((rep) => {
             let data = rep.data
-            console.log(data)
             this.nextPage = data.page + 1
             this.setState({articles: [...this.state.articles, ...data.articles]})
         }).catch(err => {console.log(err)})

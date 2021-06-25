@@ -29,17 +29,14 @@ export default class Search extends React.Component {
     _searchArticles() {
         search(this.search, 0).then((rep) => {
             let data = rep.data
-            console.log(data)
             this.nextPage = data.page + 1
-            this.setState({articles: [...this.state.articles, ...data.articles]})
+            this.setState({articles: data.articles})
         }).catch(err => {console.log(err)})
     }
 
     _loadMoreArticles() {
-
         search(this.search, this.nextPage).then((rep) => {
             let data = rep.data
-            console.log(data)
             this.nextPage = data.page + 1
             this.setState({articles: [...this.state.articles, ...data.articles]})
         }).catch(err => {console.log(err)})

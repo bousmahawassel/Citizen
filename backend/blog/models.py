@@ -36,7 +36,7 @@ class Article(models.Model):
     date = models.DateTimeField(default=timezone.now)
     tags = models.ManyToManyField(Tag)
     image = models.URLField(verbose_name="Lien de l'image")
-    category = models.CharField(max_length=20, default="", choices=[
+    category = models.CharField(max_length=20, blank=True, default="", choices=[
         ("DC", "DC"),
         ("Marvel", "Marvel"),
         ("", "Aucune")
