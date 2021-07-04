@@ -20,6 +20,7 @@ def disable_for_loaddata(signal_handler):
         if kwargs.get('raw'):
             return
         signal_handler(*args, **kwargs)
+
     return wrapper
 
 
@@ -47,13 +48,24 @@ class Article(models.Model):
 
 
 @disable_for_loaddata
-def dump_new_instances(sender, **kwargs):
+def dump_new_instances(sender, instance, created, **kwargs):
     if sender is MigrationRecorder.Migration:
         return
     print(f"{sender} has been saved !")
     out = StringIO()
     management.call_command("dumpdata", stdout=out)
     requests.put(settings.JSONBLOB_URL, json=json.loads(out.getvalue()))
+    if sender is Article and created:
+        import discord
+        client = discord.Client()
+
+        @client.event
+        async def on_ready():
+            await client.get_channel(860580606705664041).send(
+                "Nouvel article à découvrir sur l'application et le site web :"
+                f" {instance.titre}")
+            await client.close()
+        client.run("ODYwOTA5NjAwMzMyNzA5OTI5.YOCGiw.c6dhgjTYm7YBYNtykFOvUBMC6tE")
 
 
 post_save.connect(dump_new_instances)
