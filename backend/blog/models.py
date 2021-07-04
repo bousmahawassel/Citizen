@@ -57,15 +57,22 @@ def dump_new_instances(sender, instance, created, **kwargs):
     requests.put(settings.JSONBLOB_URL, json=json.loads(out.getvalue()))
     if sender is Article and created:
         import discord
+        print("imported discord")
         client = discord.Client()
+        print("created client")
 
         @client.event
         async def on_ready():
+            print("inside on_ready")
             await client.get_channel(860580606705664041).send(
                 "Nouvel article à découvrir sur l'application et le site web :"
                 f" {instance.titre}")
+            print("wrote message")
             await client.close()
+            print("closed client")
+        print("defined on_ready")
         client.run("ODYwOTA5NjAwMzMyNzA5OTI5.YOCGiw.c6dhgjTYm7YBYNtykFOvUBMC6tE")
+        print("launched client.run")
 
 
 post_save.connect(dump_new_instances)
